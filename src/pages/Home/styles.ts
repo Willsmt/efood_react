@@ -46,3 +46,10 @@ export const RestaurantGrid = styled.div`
   grid-template-columns: repeat(2, 1fr);
   gap: 48px 32px;
 `;
+
+export const Message = styled.p`
+  font-size: ${theme.fonts.sizes.cardTitle};
+  font-weight: ${theme.fonts.weights.bold};
+  color: ${theme.colors.coral};
+  text-align: center;
+`;

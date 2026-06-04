@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Modal from '../../components/Modal';
-import { restaurants } from '../../data/restaurants';
-import type { MenuItem } from '../../types';
+import { getRestaurant } from '../../services/api';
+import type { MenuItem, Restaurant } from '../../types';
 import * as S from './styles';
 
 const truncate = (text: string, max = 150): string =>
@@ -13,15 +13,40 @@ const truncate = (text: string, max = 150): string =>
 const RestaurantProfile = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const restaurant = restaurants.find((item) => item.id === Number(id));
+  useEffect(() => {
+    if (!id) return;
 
-  if (!restaurant) {
+    setIsLoading(true);
+    setError(null);
+
+    getRestaurant(Number(id))
+      .then((data) => setRestaurant(data))
+      .catch(() => setError('Não foi possível carregar o restaurante.'))
+      .finally(() => setIsLoading(false));
+  }, [id]);
+
+  if (isLoading) {
     return (
       <S.PageWrapper>
         <Header />
         <S.Main>
-          <p>Restaurante não encontrado.</p>
+          <p>Carregando...</p>
+        </S.Main>
+        <Footer />
+      </S.PageWrapper>
+    );
+  }
+
+  if (error || !restaurant) {
+    return (
+      <S.PageWrapper>
+        <Header />
+        <S.Main>
+          <p>{error ?? 'Restaurante não encontrado.'}</p>
         </S.Main>
         <Footer />
       </S.PageWrapper>
