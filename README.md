@@ -1,5 +1,7 @@
 # 🍔 efood
 
+> 🧩 **O que este projeto comprova:** React 18, TypeScript (modo estrito), Redux Toolkit (slices + selectors), React Router v6, Styled Components, Formik + Yup, consumo de API (GET/POST), Vite e deploy contínuo na Vercel.
+
 Aplicativo de delivery de comida desenvolvido no módulo de React da **EBAC**, a partir de um layout do Figma. O usuário navega por restaurantes, vê o cardápio de cada um, adiciona pratos ao carrinho e finaliza o pedido por um checkout em etapas (entrega → pagamento → confirmação) que envia os dados para uma API real.
 
 🔗 **Deploy:** https://efood-react.vercel.app
