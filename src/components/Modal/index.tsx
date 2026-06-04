@@ -1,4 +1,5 @@
-import { useCart } from '../../contexts/CartContext';
+import { useAppDispatch } from '../../store/hooks';
+import { addItem } from '../../store/cartSlice';
 import { formatPrice } from '../../utils/format';
 import type { MenuItem } from '../../types';
 import * as S from './styles';
@@ -9,10 +10,10 @@ type Props = {
 };
 
 const Modal = ({ item, onClose }: Props) => {
-  const { addItem } = useCart();
+  const dispatch = useAppDispatch();
 
   const handleAdd = () => {
-    addItem(item);
+    dispatch(addItem(item));
     onClose();
   };
 

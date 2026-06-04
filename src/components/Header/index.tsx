@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useCart } from '../../contexts/CartContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { openSidebar, selectCartItems } from '../../store/cartSlice';
 import * as S from './styles';
 
 const Header = () => {
-  const { items, openSidebar } = useCart();
+  const items = useAppSelector(selectCartItems);
+  const dispatch = useAppDispatch();
 
   return (
     <S.HeaderContainer>
@@ -14,7 +16,7 @@ const Header = () => {
         <S.Logo as={Link} to="/">
           efood
         </S.Logo>
-        <S.CartButton onClick={openSidebar}>
+        <S.CartButton onClick={() => dispatch(openSidebar())}>
           {items.length} produto(s) no carrinho
         </S.CartButton>
       </S.Inner>

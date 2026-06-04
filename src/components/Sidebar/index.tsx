@@ -1,5 +1,15 @@
 import { useState } from 'react';
-import { useCart } from '../../contexts/CartContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  clearCart,
+  closeSidebar,
+  removeItem,
+  selectCartIsOpen,
+  selectCartItems,
+  selectCartStep,
+  selectCartTotal,
+  setStep,
+} from '../../store/cartSlice';
 import { formatPrice } from '../../utils/format';
 import * as S from './styles';
 
@@ -7,16 +17,11 @@ const generateOrderId = (): string =>
   Math.random().toString(36).slice(2, 10).toUpperCase();
 
 const Sidebar = () => {
-  const {
-    items,
-    isOpen,
-    step,
-    total,
-    removeItem,
-    closeSidebar,
-    setStep,
-    clearCart,
-  } = useCart();
+  const items = useAppSelector(selectCartItems);
+  const isOpen = useAppSelector(selectCartIsOpen);
+  const step = useAppSelector(selectCartStep);
+  const total = useAppSelector(selectCartTotal);
+  const dispatch = useAppDispatch();
   const [orderId, setOrderId] = useState('');
 
   if (!isOpen) {
@@ -25,12 +30,12 @@ const Sidebar = () => {
 
   const finishPayment = () => {
     setOrderId(generateOrderId());
-    setStep('success');
+    dispatch(setStep('success'));
   };
 
   const finishOrder = () => {
-    clearCart();
-    closeSidebar();
+    dispatch(clearCart());
+    dispatch(closeSidebar());
   };
 
   const renderCart = () => (
@@ -51,7 +56,7 @@ const Sidebar = () => {
                   <S.ProductPrice>{formatPrice(item.preco)}</S.ProductPrice>
                 </S.ProductInfo>
                 <S.RemoveButton
-                  onClick={() => removeItem(item.cartId)}
+                  onClick={() => dispatch(removeItem(item.cartId))}
                   aria-label="Remover do carrinho"
                 >
                   🗑
@@ -63,7 +68,7 @@ const Sidebar = () => {
             <span>Valor total</span>
             <span>{formatPrice(total)}</span>
           </S.TotalRow>
-          <S.Button onClick={() => setStep('delivery')}>
+          <S.Button onClick={() => dispatch(setStep('delivery'))}>
             Continuar com a entrega
           </S.Button>
         </>
@@ -101,10 +106,10 @@ const Sidebar = () => {
         <input id="complement" type="text" />
       </S.Field>
       <S.Buttons>
-        <S.Button onClick={() => setStep('payment')}>
+        <S.Button onClick={() => dispatch(setStep('payment'))}>
           Continuar com o pagamento
         </S.Button>
-        <S.Button onClick={() => setStep('cart')}>
+        <S.Button onClick={() => dispatch(setStep('cart'))}>
           Voltar para o carrinho
         </S.Button>
       </S.Buttons>
@@ -140,7 +145,7 @@ const Sidebar = () => {
       </S.FieldRow>
       <S.Buttons>
         <S.Button onClick={finishPayment}>Finalizar pagamento</S.Button>
-        <S.Button onClick={() => setStep('delivery')}>
+        <S.Button onClick={() => dispatch(setStep('delivery'))}>
           Voltar para a edição de endereço
         </S.Button>
       </S.Buttons>
@@ -181,7 +186,9 @@ const Sidebar = () => {
   };
 
   return (
-    <S.Overlay onClick={step === 'success' ? undefined : closeSidebar}>
+    <S.Overlay
+      onClick={step === 'success' ? undefined : () => dispatch(closeSidebar())}
+    >
       <S.Aside onClick={(event) => event.stopPropagation()}>
         {renderStep()}
       </S.Aside>
