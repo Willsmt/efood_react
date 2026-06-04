@@ -145,7 +145,19 @@ export const Field = styled.div`
       outline: none;
       border-color: ${theme.colors.coral};
     }
+
+    &.error {
+      border-color: #d40000;
+    }
   }
+`;
+
+export const ErrorText = styled.small`
+  display: block;
+  margin-top: 4px;
+  font-size: ${theme.fonts.sizes.small};
+  font-weight: ${theme.fonts.weights.bold};
+  color: #ffd0d0;
 `;
 
 export const FieldRow = styled.div<{ $template?: string }>`

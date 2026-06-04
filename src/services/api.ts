@@ -1,4 +1,4 @@
-import type { Restaurant } from '../types';
+import type { Purchase, PurchaseResponse, Restaurant } from '../types';
 
 const BASE_URL = 'https://api-ebac.vercel.app/api/efood';
 
@@ -17,4 +17,15 @@ export const getRestaurants = async (): Promise<Restaurant[]> => {
 export const getRestaurant = async (id: number): Promise<Restaurant> => {
   const response = await fetch(`${BASE_URL}/restaurantes/${id}`);
   return handleResponse<Restaurant>(response);
+};
+
+export const checkout = async (
+  body: Purchase,
+): Promise<PurchaseResponse> => {
+  const response = await fetch(`${BASE_URL}/checkout`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return handleResponse<PurchaseResponse>(response);
 };
