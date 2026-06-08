@@ -31,8 +31,13 @@ export const SocialLinks = styled.div`
   gap: 8px;
 
   a {
-    color: ${theme.colors.coral};
     display: flex;
+  }
+
+  img {
+    display: block;
+    width: 24px;
+    height: 24px;
   }
 `;
 
