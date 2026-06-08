@@ -1,10 +1,13 @@
+import logo from '../../assets/image/logo.png';
 import * as S from './styles';
 
 const Footer = () => {
   return (
     <S.FooterContainer>
       <S.Inner>
-        <S.Logo>efood</S.Logo>
+        <S.Logo>
+          <img src={logo} alt="efood" />
+        </S.Logo>
         <S.SocialLinks>
           <a href="#" aria-label="Instagram">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">

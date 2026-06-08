@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
+import vector from '../../assets/image/Vector.png';
 
 export const HeaderContainer = styled.header`
   background-color: ${theme.colors.beige};
+  background-image: url(${vector});
+  background-repeat: repeat;
   padding: 24px 0;
 `;
 
@@ -22,11 +25,13 @@ export const NavLink = styled.a`
 `;
 
 export const Logo = styled.div`
-  font-size: 24px;
-  font-weight: ${theme.fonts.weights.black};
-  color: ${theme.colors.coral};
-  border: 1px solid ${theme.colors.coral};
-  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+
+  img {
+    display: block;
+    height: 32px;
+  }
 `;
 
 export const CartButton = styled.button`

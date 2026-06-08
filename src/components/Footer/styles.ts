@@ -18,11 +18,12 @@ export const Inner = styled.div`
 `;
 
 export const Logo = styled.div`
-  font-size: 24px;
-  font-weight: ${theme.fonts.weights.black};
-  color: ${theme.colors.coral};
-  border: 1px solid ${theme.colors.coral};
-  padding: 4px 8px;
+  display: flex;
+
+  img {
+    display: block;
+    height: 32px;
+  }
 `;
 
 export const SocialLinks = styled.div`
