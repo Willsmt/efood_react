@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { theme } from '../../styles/theme';
+import vector from '../../assets/image/Vector.png';
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
@@ -10,6 +11,8 @@ export const PageWrapper = styled.div`
 
 export const Hero = styled.section`
   background-color: ${theme.colors.beige};
+  background-image: url(${vector});
+  background-repeat: repeat;
   height: 384px;
   padding: 40px 171px;
   display: flex;
@@ -18,11 +21,12 @@ export const Hero = styled.section`
 `;
 
 export const Logo = styled.div`
-  font-size: 24px;
-  font-weight: ${theme.fonts.weights.black};
-  color: ${theme.colors.coral};
-  border: 1px solid ${theme.colors.coral};
-  padding: 4px 8px;
+  display: flex;
+
+  img {
+    display: block;
+    height: 57px;
+  }
 `;
 
 export const HeroText = styled.h1`

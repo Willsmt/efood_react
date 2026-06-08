@@ -3,6 +3,7 @@ import Footer from '../../components/Footer';
 import RestaurantCard from '../../components/RestaurantCard';
 import { getRestaurants } from '../../services/api';
 import type { Restaurant } from '../../types';
+import logo from '../../assets/image/logo.png';
 import * as S from './styles';
 
 const Home = () => {
@@ -20,7 +21,9 @@ const Home = () => {
   return (
     <S.PageWrapper>
       <S.Hero>
-        <S.Logo>efood</S.Logo>
+        <S.Logo>
+          <img src={logo} alt="efood" />
+        </S.Logo>
         <S.HeroText>
           Viva experiências gastronômicas
           <br />
