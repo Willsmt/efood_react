@@ -11,6 +11,7 @@ export const Overlay = styled.div`
 `;
 
 export const Aside = styled.aside`
+  position: relative;
   width: 100%;
   max-width: ${theme.layout.sidebarWidth};
   height: 100%;
@@ -19,6 +20,23 @@ export const Aside = styled.aside`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+`;
+
+export const Close = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: ${theme.colors.beige};
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
 
 export const EmptyText = styled.p`

@@ -28,7 +28,7 @@ const RestaurantProfile = () => {
       <S.PageWrapper>
         <Header />
         <S.Main>
-          <p>Carregando...</p>
+          <S.Message>Carregando...</S.Message>
         </S.Main>
         <Footer />
       </S.PageWrapper>
@@ -40,7 +40,7 @@ const RestaurantProfile = () => {
       <S.PageWrapper>
         <Header />
         <S.Main>
-          <p>{error ?? 'Restaurante não encontrado.'}</p>
+          <S.Message>{error ?? 'Restaurante não encontrado.'}</S.Message>
         </S.Main>
         <Footer />
       </S.PageWrapper>

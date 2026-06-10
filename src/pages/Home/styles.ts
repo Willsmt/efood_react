@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme, media } from '../../styles/theme';
+import { theme, media, containerPadding } from '../../styles/theme';
 import vector from '../../assets/image/Vector.png';
 
 export const PageWrapper = styled.div`
@@ -14,18 +14,17 @@ export const Hero = styled.section`
   background-image: url(${vector});
   background-repeat: repeat;
   height: 384px;
-  padding: 40px 171px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  ${media.tablet} {
-    padding: 40px 32px;
-  }
+  ${containerPadding}
 
   ${media.mobile} {
     height: auto;
-    padding: 32px 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     gap: 32px;
   }
 `;
@@ -56,15 +55,19 @@ export const HeroText = styled.h1`
 export const Main = styled.main`
   max-width: 1366px;
   margin: 0 auto;
-  padding: 80px 171px;
+  padding-top: 80px;
+  padding-bottom: 80px;
   width: 100%;
+  ${containerPadding}
 
   ${media.tablet} {
-    padding: 56px 32px;
+    padding-top: 56px;
+    padding-bottom: 56px;
   }
 
   ${media.mobile} {
-    padding: 40px 16px;
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 `;
 

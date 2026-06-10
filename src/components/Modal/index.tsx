@@ -1,5 +1,7 @@
 import { useAppDispatch } from '../../store/hooks';
 import { addItem } from '../../store/cartSlice';
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { formatPrice } from '../../utils/format';
 import type { MenuItem } from '../../types';
 import * as S from './styles';
@@ -11,6 +13,9 @@ type Props = {
 
 const Modal = ({ item, onClose }: Props) => {
   const dispatch = useAppDispatch();
+
+  useBodyScrollLock(true);
+  useEscapeKey(onClose);
 
   const handleAdd = () => {
     dispatch(addItem(item));

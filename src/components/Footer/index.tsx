@@ -12,13 +12,28 @@ const Footer = () => {
           <img src={logo} alt="efood" />
         </S.Logo>
         <S.SocialLinks>
-          <a href="#" aria-label="Instagram">
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram"
+          >
             <img src={instagram} alt="Instagram" />
           </a>
-          <a href="#" aria-label="Facebook">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Facebook"
+          >
             <img src={facebook} alt="Facebook" />
           </a>
-          <a href="#" aria-label="Twitter">
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Twitter"
+          >
             <img src={twitter} alt="Twitter" />
           </a>
         </S.SocialLinks>

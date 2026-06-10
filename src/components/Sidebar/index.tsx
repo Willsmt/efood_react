@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
+import { useEscapeKey } from '../../hooks/useEscapeKey';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   clearCart,
@@ -107,6 +109,9 @@ const Sidebar = () => {
       }
     },
   });
+
+  useBodyScrollLock(isOpen);
+  useEscapeKey(() => dispatch(closeSidebar()), isOpen && step !== 'success');
 
   if (!isOpen) {
     return null;
@@ -424,6 +429,15 @@ const Sidebar = () => {
       onClick={step === 'success' ? undefined : () => dispatch(closeSidebar())}
     >
       <S.Aside onClick={(event) => event.stopPropagation()}>
+        {step !== 'success' && (
+          <S.Close
+            type="button"
+            onClick={() => dispatch(closeSidebar())}
+            aria-label="Fechar"
+          >
+            ✕
+          </S.Close>
+        )}
         <form onSubmit={form.handleSubmit}>{renderStep()}</form>
       </S.Aside>
     </S.Overlay>

@@ -2,6 +2,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './styles/global';
 import { theme } from './styles/theme';
 import Sidebar from './components/Sidebar';
+import ScrollToTop from './components/ScrollToTop';
 import AppRoutes from './routes';
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
       <GlobalStyle />
       <AppRoutes />
       <Sidebar />
+      <ScrollToTop />
     </ThemeProvider>
   );
 };

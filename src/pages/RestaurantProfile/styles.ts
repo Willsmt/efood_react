@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme, media } from '../../styles/theme';
+import { theme, media, containerPadding } from '../../styles/theme';
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
@@ -28,18 +28,17 @@ export const CoverOverlay = styled.div`
 export const CoverInner = styled.div`
   max-width: 1366px;
   margin: 0 auto;
-  padding: 24px 171px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  ${media.tablet} {
-    padding: 24px 32px;
-  }
+  ${containerPadding}
 
   ${media.mobile} {
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 `;
 
@@ -66,15 +65,19 @@ export const RestaurantName = styled.h2`
 export const Main = styled.main`
   max-width: 1366px;
   margin: 0 auto;
-  padding: 56px 171px 80px;
+  padding-top: 56px;
+  padding-bottom: 80px;
   width: 100%;
+  ${containerPadding}
 
   ${media.tablet} {
-    padding: 40px 32px 56px;
+    padding-top: 40px;
+    padding-bottom: 56px;
   }
 
   ${media.mobile} {
-    padding: 24px 16px 40px;
+    padding-top: 24px;
+    padding-bottom: 40px;
   }
 `;
 
@@ -128,6 +131,13 @@ export const ProductDescription = styled.p`
   color: ${theme.colors.beige};
   line-height: 22px;
   flex: 1;
+`;
+
+export const Message = styled.p`
+  font-size: ${theme.fonts.sizes.cardTitle};
+  font-weight: ${theme.fonts.weights.bold};
+  color: ${theme.colors.coral};
+  text-align: center;
 `;
 
 export const AddButton = styled.button`

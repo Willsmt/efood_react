@@ -1,3 +1,5 @@
+import { css } from 'styled-components';
+
 export const theme = {
   colors: {
     coral: '#e66767',
@@ -45,3 +47,20 @@ export const media = {
   // Celular e abaixo (≤ 768px)
   mobile: `@media (max-width: ${theme.breakpoints.tablet})`,
 } as const;
+
+// Padding lateral padrão do conteúdo, responsivo. Reaproveitado por
+// Header, Footer, Hero e os <main> das páginas.
+export const containerPadding = css`
+  padding-left: ${theme.layout.contentPadding};
+  padding-right: ${theme.layout.contentPadding};
+
+  ${media.tablet} {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  ${media.mobile} {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+`;
