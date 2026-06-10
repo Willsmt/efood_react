@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
+import { theme, media } from '../../styles/theme';
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
@@ -33,18 +33,34 @@ export const CoverInner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  ${media.tablet} {
+    padding: 24px 32px;
+  }
+
+  ${media.mobile} {
+    padding: 16px;
+  }
 `;
 
 export const Category = styled.span`
   font-size: 32px;
   font-weight: ${theme.fonts.weights.thin};
   color: ${theme.colors.white};
+
+  ${media.mobile} {
+    font-size: 20px;
+  }
 `;
 
 export const RestaurantName = styled.h2`
   font-size: 32px;
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.white};
+
+  ${media.mobile} {
+    font-size: 24px;
+  }
 `;
 
 export const Main = styled.main`
@@ -52,12 +68,29 @@ export const Main = styled.main`
   margin: 0 auto;
   padding: 56px 171px 80px;
   width: 100%;
+
+  ${media.tablet} {
+    padding: 40px 32px 56px;
+  }
+
+  ${media.mobile} {
+    padding: 24px 16px 40px;
+  }
 `;
 
 export const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+
+  ${media.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 `;
 
 export const ProductCard = styled.article`

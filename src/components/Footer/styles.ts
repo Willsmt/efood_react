@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
+import { theme, media } from '../../styles/theme';
 
 export const FooterContainer = styled.footer`
   background-color: ${theme.colors.beige};
@@ -15,6 +15,14 @@ export const Inner = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 32px;
+
+  ${media.tablet} {
+    padding: 0 32px;
+  }
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const Logo = styled.div`

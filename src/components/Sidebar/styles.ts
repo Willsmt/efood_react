@@ -11,7 +11,8 @@ export const Overlay = styled.div`
 `;
 
 export const Aside = styled.aside`
-  width: ${theme.layout.sidebarWidth};
+  width: 100%;
+  max-width: ${theme.layout.sidebarWidth};
   height: 100%;
   background-color: ${theme.colors.coral};
   padding: 32px 8px 8px;

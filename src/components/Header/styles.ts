@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
+import { theme, media } from '../../styles/theme';
 import vector from '../../assets/image/Vector.png';
 
 export const HeaderContainer = styled.header`
@@ -16,6 +16,15 @@ export const Inner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+
+  ${media.tablet} {
+    padding: 0 32px;
+  }
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const NavLink = styled.a`

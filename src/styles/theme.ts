@@ -26,6 +26,7 @@ export const theme = {
   },
   breakpoints: {
     desktop: '1024px',
+    tablet: '768px',
   },
   layout: {
     contentPadding: '171px',
@@ -35,3 +36,12 @@ export const theme = {
 } as const;
 
 export type Theme = typeof theme;
+
+// Helpers de media query (mobile-last: o estilo base é desktop e os
+// breakpoints abaixo sobrescrevem em telas menores).
+export const media = {
+  // Tablet e abaixo (≤ 1024px)
+  tablet: `@media (max-width: ${theme.breakpoints.desktop})`,
+  // Celular e abaixo (≤ 768px)
+  mobile: `@media (max-width: ${theme.breakpoints.tablet})`,
+} as const;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
+import { theme, media } from '../../styles/theme';
 
 export const Overlay = styled.div`
   position: fixed;
@@ -20,6 +20,12 @@ export const Content = styled.div`
   padding: 32px;
   display: flex;
   gap: 24px;
+
+  ${media.mobile} {
+    flex-direction: column;
+    padding: 24px 16px;
+    gap: 16px;
+  }
 `;
 
 export const Close = styled.button`
@@ -44,6 +50,11 @@ export const Image = styled.img`
   height: 280px;
   object-fit: cover;
   flex-shrink: 0;
+
+  ${media.mobile} {
+    width: 100%;
+    height: 180px;
+  }
 `;
 
 export const Details = styled.div`

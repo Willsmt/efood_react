@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../styles/theme';
+import { theme, media } from '../../styles/theme';
 import vector from '../../assets/image/Vector.png';
 
 export const PageWrapper = styled.div`
@@ -18,6 +18,16 @@ export const Hero = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  ${media.tablet} {
+    padding: 40px 32px;
+  }
+
+  ${media.mobile} {
+    height: auto;
+    padding: 32px 16px;
+    gap: 32px;
+  }
 `;
 
 export const Logo = styled.div`
@@ -36,6 +46,11 @@ export const HeroText = styled.h1`
   color: ${theme.colors.coral};
   text-align: center;
   line-height: 1.2;
+
+  ${media.mobile} {
+    margin: 0;
+    font-size: 24px;
+  }
 `;
 
 export const Main = styled.main`
@@ -43,12 +58,25 @@ export const Main = styled.main`
   margin: 0 auto;
   padding: 80px 171px;
   width: 100%;
+
+  ${media.tablet} {
+    padding: 56px 32px;
+  }
+
+  ${media.mobile} {
+    padding: 40px 16px;
+  }
 `;
 
 export const RestaurantGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 48px 32px;
+
+  ${media.mobile} {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 `;
 
 export const Message = styled.p`
