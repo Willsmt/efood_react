@@ -1,22 +1,16 @@
-import { useEffect, useState } from 'react';
 import Footer from '../../components/Footer';
 import RestaurantCard from '../../components/RestaurantCard';
 import { getRestaurants } from '../../services/api';
-import type { Restaurant } from '../../types';
+import { useFetch } from '../../hooks/useFetch';
 import logo from '../../assets/image/logo.png';
 import * as S from './styles';
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    getRestaurants()
-      .then((data) => setRestaurants(data))
-      .catch(() => setError('Não foi possível carregar os restaurantes.'))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const {
+    data: restaurants,
+    isLoading,
+    error,
+  } = useFetch(getRestaurants, 'Não foi possível carregar os restaurantes.');
 
   return (
     <S.PageWrapper>
@@ -33,7 +27,7 @@ const Home = () => {
       <S.Main>
         {isLoading && <S.Message>Carregando restaurantes...</S.Message>}
         {error && <S.Message>{error}</S.Message>}
-        {!isLoading && !error && (
+        {!isLoading && !error && restaurants && (
           <S.RestaurantGrid>
             {restaurants.map((restaurant) => (
               <RestaurantCard key={restaurant.id} restaurant={restaurant} />

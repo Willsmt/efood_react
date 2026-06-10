@@ -50,17 +50,25 @@ const Sidebar = () => {
         .min(3, 'A cidade precisa ter pelo menos 3 caracteres')
         .required('Campo obrigatório'),
       zipCode: Yup.string()
-        .min(8, 'O CEP precisa ter pelo menos 8 caracteres')
+        .matches(/^\d{8}$/, 'O CEP deve ter 8 dígitos')
         .required('Campo obrigatório'),
-      number: Yup.string().required('Campo obrigatório'),
+      number: Yup.string()
+        .matches(/^\d+$/, 'Informe um número válido')
+        .required('Campo obrigatório'),
       complement: Yup.string(),
       cardName: Yup.string().required('Campo obrigatório'),
-      cardNumber: Yup.string().required('Campo obrigatório'),
-      cardCode: Yup.string()
-        .min(3, 'O CVV precisa ter pelo menos 3 dígitos')
+      cardNumber: Yup.string()
+        .matches(/^\d{16}$/, 'O número do cartão deve ter 16 dígitos')
         .required('Campo obrigatório'),
-      expiresMonth: Yup.string().required('Campo obrigatório'),
-      expiresYear: Yup.string().required('Campo obrigatório'),
+      cardCode: Yup.string()
+        .matches(/^\d{3,4}$/, 'O CVV deve ter 3 ou 4 dígitos')
+        .required('Campo obrigatório'),
+      expiresMonth: Yup.string()
+        .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido (01 a 12)')
+        .required('Campo obrigatório'),
+      expiresYear: Yup.string()
+        .matches(/^\d{2,4}$/, 'Ano inválido')
+        .required('Campo obrigatório'),
     }),
     onSubmit: async (values) => {
       setApiError(null);
@@ -119,7 +127,7 @@ const Sidebar = () => {
       'zipCode',
       'number',
     ];
-    form.setTouched({
+    await form.setTouched({
       ...form.touched,
       receiver: true,
       description: true,
@@ -272,7 +280,7 @@ const Sidebar = () => {
         />
       </S.Field>
       <S.Buttons>
-        <S.Button type="button" onClick={goToPayment}>
+        <S.Button type="button" onClick={() => void goToPayment()}>
           Continuar com o pagamento
         </S.Button>
         <S.Button type="button" onClick={() => dispatch(setStep('cart'))}>

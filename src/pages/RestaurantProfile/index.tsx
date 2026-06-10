@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Modal from '../../components/Modal';
 import { getRestaurant } from '../../services/api';
-import type { MenuItem, Restaurant } from '../../types';
+import { useFetch } from '../../hooks/useFetch';
+import { truncate } from '../../utils/format';
+import type { MenuItem } from '../../types';
 import * as S from './styles';
-
-const truncate = (text: string, max = 150): string =>
-  text.length > max ? `${text.slice(0, max)}...` : text;
 
 const RestaurantProfile = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
-  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!id) return;
-
-    setIsLoading(true);
-    setError(null);
-
-    getRestaurant(Number(id))
-      .then((data) => setRestaurant(data))
-      .catch(() => setError('Não foi possível carregar o restaurante.'))
-      .finally(() => setIsLoading(false));
-  }, [id]);
+  const {
+    data: restaurant,
+    isLoading,
+    error,
+  } = useFetch(
+    () => getRestaurant(Number(id)),
+    'Não foi possível carregar o restaurante.',
+    [id],
+  );
 
   if (isLoading) {
     return (
