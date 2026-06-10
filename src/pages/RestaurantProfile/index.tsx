@@ -72,7 +72,7 @@ const RestaurantProfile = () => {
                   {truncate(produto.descricao)}
                 </S.ProductDescription>
                 <S.AddButton onClick={() => setSelectedItem(produto)}>
-                  Mais detalhes
+                  Adicionar ao carrinho
                 </S.AddButton>
               </S.ProductInfo>
             </S.ProductCard>

@@ -98,7 +98,6 @@ export const ProductGrid = styled.div`
 
 export const ProductCard = styled.article`
   background-color: ${theme.colors.coral};
-  border-radius: 8px;
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -108,7 +107,6 @@ export const ProductCard = styled.article`
     width: 100%;
     height: 167px;
     object-fit: cover;
-    border-radius: 8px;
   }
 `;
 
