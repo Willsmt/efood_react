@@ -69,7 +69,7 @@ export const ProductGrid = styled.div`
 `;
 
 export const ProductCard = styled.article`
-  background-color: ${theme.colors.beige};
+  background-color: ${theme.colors.coral};
   display: flex;
   flex-direction: column;
 
@@ -91,20 +91,20 @@ export const ProductInfo = styled.div`
 export const ProductName = styled.h3`
   font-size: ${theme.fonts.sizes.subtitle};
   font-weight: ${theme.fonts.weights.bold};
-  color: ${theme.colors.coral};
+  color: ${theme.colors.beige};
 `;
 
 export const ProductDescription = styled.p`
   font-size: ${theme.fonts.sizes.body};
   font-weight: ${theme.fonts.weights.regular};
-  color: ${theme.colors.coral};
+  color: ${theme.colors.beige};
   line-height: 22px;
   flex: 1;
 `;
 
 export const AddButton = styled.button`
-  background-color: ${theme.colors.coral};
-  color: ${theme.colors.beige};
+  background-color: ${theme.colors.beige};
+  color: ${theme.colors.coral};
   font-size: ${theme.fonts.sizes.body};
   font-weight: ${theme.fonts.weights.bold};
   padding: 4px 12px;
