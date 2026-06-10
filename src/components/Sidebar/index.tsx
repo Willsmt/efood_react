@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   clearCart,
@@ -26,6 +27,7 @@ const Sidebar = () => {
   const dispatch = useAppDispatch();
   const [orderId, setOrderId] = useState('');
   const [apiError, setApiError] = useState<string | null>(null);
+  const asideRef = useRef<HTMLElement>(null);
 
   // Um ÚNICO formulário cobre entrega e pagamento. O Formik cuida de
   // valores/erros/submit; o Yup (validationSchema) descreve as regras.
@@ -122,6 +124,7 @@ const Sidebar = () => {
   // hooks (não podem ser chamados condicionalmente).
   useBodyScrollLock(isOpen);
   useEscapeKey(() => dispatch(closeSidebar()), isOpen && step !== 'success');
+  useFocusTrap(asideRef, isOpen);
 
   if (!isOpen) {
     return null;
@@ -442,7 +445,11 @@ const Sidebar = () => {
     <S.Overlay
       onClick={step === 'success' ? undefined : () => dispatch(closeSidebar())}
     >
-      <S.Aside onClick={(event) => event.stopPropagation()}>
+      <S.Aside
+        ref={asideRef}
+        tabIndex={-1}
+        onClick={(event) => event.stopPropagation()}
+      >
         {step !== 'success' && (
           <S.Close
             type="button"

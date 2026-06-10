@@ -62,11 +62,13 @@ src/
 │   └── ScrollToTop/        # Botão flutuante "voltar ao topo" (só em mobile/tablet)
 ├── pages/
 │   ├── Home/               # Lista de restaurantes (consome a API)
-│   └── RestaurantProfile/  # Perfil do restaurante + cardápio (consome a API)
+│   ├── RestaurantProfile/  # Perfil do restaurante + cardápio (consome a API)
+│   └── NotFound/           # Página 404 (rota "*")
 ├── hooks/                  # Hooks customizados reutilizáveis
 │   ├── useFetch.ts         # Padrão de busca (dados / carregando / erro)
 │   ├── useBodyScrollLock.ts# Trava o scroll do fundo com overlays abertos
-│   └── useEscapeKey.ts     # Fecha overlays com a tecla Esc
+│   ├── useEscapeKey.ts     # Fecha overlays com a tecla Esc
+│   └── useFocusTrap.ts     # Prende o foco do teclado dentro dos overlays
 ├── routes/index.tsx        # Definição das rotas
 ├── store/                  # Redux Toolkit
 │   ├── index.ts            # Configuração da store + tipos RootState/AppDispatch
@@ -140,7 +142,8 @@ O `orderId` retornado é exibido na tela de confirmação do pedido.
 - ✅ Tela de confirmação preenchida com o **`orderId`** retornado pela API
 - ✅ Layout **responsivo** para mobile, tablet e desktop
 - ✅ Botão **"voltar ao topo"** flutuante (mobile/tablet)
-- ✅ Overlays (modal e carrinho) fecham com **Esc** e travam o scroll do fundo
+- ✅ Overlays (modal e carrinho) com **Esc**, trava de scroll e **focus trap** (acessibilidade)
+- ✅ Página **404** para rotas inexistentes
 
 ---
 

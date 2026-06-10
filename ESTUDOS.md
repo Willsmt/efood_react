@@ -632,6 +632,7 @@ Tente responder sem olhar o código:
 | **Hook customizado** | Função que começa com `use` e usa outros hooks dentro, para reutilizar lógica com estado (ex.: `useFetch`). |
 | **Mixin (`css`)** | Pedaço de estilo guardado numa variável e reaproveitado em vários styled components (ex.: `containerPadding`). |
 | **Mobile-last** | Estratégia responsiva onde o estilo base é desktop e media queries `max-width` ajustam telas menores. |
+| **Focus trap** | Prender o foco do teclado dentro de um overlay (modal/carrinho) enquanto ele está aberto — acessibilidade. |
 | **Generic (`<T>`)** | Tipo "parametrizável": a mesma função/tipo serve para vários tipos, definidos por quem usa. |
 
 ---

@@ -1,7 +1,9 @@
+import { useRef } from 'react';
 import { useAppDispatch } from '../../store/hooks';
 import { addItem } from '../../store/cartSlice';
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock';
 import { useEscapeKey } from '../../hooks/useEscapeKey';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { formatPrice } from '../../utils/format';
 import type { MenuItem } from '../../types';
 import * as S from './styles';
@@ -13,11 +15,13 @@ type Props = {
 
 const Modal = ({ item, onClose }: Props) => {
   const dispatch = useAppDispatch();
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  // Enquanto o modal está aberto: trava o scroll do fundo e permite fechar
-  // com a tecla Esc.
+  // Enquanto o modal está aberto: trava o scroll do fundo, fecha com Esc e
+  // prende o foco do teclado dentro do conteúdo.
   useBodyScrollLock(true);
   useEscapeKey(onClose);
+  useFocusTrap(contentRef);
 
   // Adiciona o prato ao carrinho (Redux) e fecha o modal.
   const handleAdd = () => {
@@ -27,7 +31,11 @@ const Modal = ({ item, onClose }: Props) => {
 
   return (
     <S.Overlay onClick={onClose}>
-      <S.Content onClick={(event) => event.stopPropagation()}>
+      <S.Content
+        ref={contentRef}
+        tabIndex={-1}
+        onClick={(event) => event.stopPropagation()}
+      >
         <S.Close onClick={onClose} aria-label="Fechar">
           ✕
         </S.Close>

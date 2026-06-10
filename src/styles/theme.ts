@@ -35,7 +35,6 @@ export const theme = {
   layout: {
     contentPadding: '171px',
     sidebarWidth: '360px',
-    sidebarPadding: '8px',
   },
 } as const;
 

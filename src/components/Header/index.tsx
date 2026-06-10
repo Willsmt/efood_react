@@ -19,8 +19,12 @@ const Header = () => {
         <S.Logo as={Link} to="/">
           <img src={logo} alt="efood" />
         </S.Logo>
-        <S.CartButton onClick={() => dispatch(openSidebar())}>
-          {items.length} produto(s) no carrinho
+        <S.CartButton
+          onClick={() => dispatch(openSidebar())}
+          aria-label={`${items.length} produto(s) no carrinho`}
+        >
+          <S.CartLabelFull>{items.length} produto(s) no carrinho</S.CartLabelFull>
+          <S.CartLabelShort>🛒 {items.length}</S.CartLabelShort>
         </S.CartButton>
       </S.Inner>
     </S.HeaderContainer>
