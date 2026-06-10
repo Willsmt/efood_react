@@ -223,9 +223,13 @@ const Sidebar = () => {
           onChange={form.handleChange}
           onBlur={form.handleBlur}
           className={checkInputHasError('receiver') ? 'error' : ''}
+          aria-invalid={checkInputHasError('receiver') || undefined}
+          aria-describedby={
+            checkInputHasError('receiver') ? 'receiver-error' : undefined
+          }
         />
         {checkInputHasError('receiver') && (
-          <S.ErrorText>{form.errors.receiver}</S.ErrorText>
+          <S.ErrorText id="receiver-error">{form.errors.receiver}</S.ErrorText>
         )}
       </S.Field>
       <S.Field>
@@ -238,9 +242,13 @@ const Sidebar = () => {
           onChange={form.handleChange}
           onBlur={form.handleBlur}
           className={checkInputHasError('description') ? 'error' : ''}
+          aria-invalid={checkInputHasError('description') || undefined}
+          aria-describedby={
+            checkInputHasError('description') ? 'description-error' : undefined
+          }
         />
         {checkInputHasError('description') && (
-          <S.ErrorText>{form.errors.description}</S.ErrorText>
+          <S.ErrorText id="description-error">{form.errors.description}</S.ErrorText>
         )}
       </S.Field>
       <S.Field>
@@ -253,9 +261,13 @@ const Sidebar = () => {
           onChange={form.handleChange}
           onBlur={form.handleBlur}
           className={checkInputHasError('city') ? 'error' : ''}
+          aria-invalid={checkInputHasError('city') || undefined}
+          aria-describedby={
+            checkInputHasError('city') ? 'city-error' : undefined
+          }
         />
         {checkInputHasError('city') && (
-          <S.ErrorText>{form.errors.city}</S.ErrorText>
+          <S.ErrorText id="city-error">{form.errors.city}</S.ErrorText>
         )}
       </S.Field>
       <S.FieldRow>
@@ -269,9 +281,13 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('zipCode') ? 'error' : ''}
+            aria-invalid={checkInputHasError('zipCode') || undefined}
+            aria-describedby={
+              checkInputHasError('zipCode') ? 'zipCode-error' : undefined
+            }
           />
           {checkInputHasError('zipCode') && (
-            <S.ErrorText>{form.errors.zipCode}</S.ErrorText>
+            <S.ErrorText id="zipCode-error">{form.errors.zipCode}</S.ErrorText>
           )}
         </S.Field>
         <S.Field>
@@ -284,9 +300,13 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('number') ? 'error' : ''}
+            aria-invalid={checkInputHasError('number') || undefined}
+            aria-describedby={
+              checkInputHasError('number') ? 'number-error' : undefined
+            }
           />
           {checkInputHasError('number') && (
-            <S.ErrorText>{form.errors.number}</S.ErrorText>
+            <S.ErrorText id="number-error">{form.errors.number}</S.ErrorText>
           )}
         </S.Field>
       </S.FieldRow>
@@ -325,9 +345,13 @@ const Sidebar = () => {
           onChange={form.handleChange}
           onBlur={form.handleBlur}
           className={checkInputHasError('cardName') ? 'error' : ''}
+          aria-invalid={checkInputHasError('cardName') || undefined}
+          aria-describedby={
+            checkInputHasError('cardName') ? 'cardName-error' : undefined
+          }
         />
         {checkInputHasError('cardName') && (
-          <S.ErrorText>{form.errors.cardName}</S.ErrorText>
+          <S.ErrorText id="cardName-error">{form.errors.cardName}</S.ErrorText>
         )}
       </S.Field>
       <S.FieldRow $template="1fr 87px">
@@ -341,9 +365,13 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('cardNumber') ? 'error' : ''}
+            aria-invalid={checkInputHasError('cardNumber') || undefined}
+            aria-describedby={
+              checkInputHasError('cardNumber') ? 'cardNumber-error' : undefined
+            }
           />
           {checkInputHasError('cardNumber') && (
-            <S.ErrorText>{form.errors.cardNumber}</S.ErrorText>
+            <S.ErrorText id="cardNumber-error">{form.errors.cardNumber}</S.ErrorText>
           )}
         </S.Field>
         <S.Field>
@@ -356,9 +384,13 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('cardCode') ? 'error' : ''}
+            aria-invalid={checkInputHasError('cardCode') || undefined}
+            aria-describedby={
+              checkInputHasError('cardCode') ? 'cardCode-error' : undefined
+            }
           />
           {checkInputHasError('cardCode') && (
-            <S.ErrorText>{form.errors.cardCode}</S.ErrorText>
+            <S.ErrorText id="cardCode-error">{form.errors.cardCode}</S.ErrorText>
           )}
         </S.Field>
       </S.FieldRow>
@@ -373,9 +405,13 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('expiresMonth') ? 'error' : ''}
+            aria-invalid={checkInputHasError('expiresMonth') || undefined}
+            aria-describedby={
+              checkInputHasError('expiresMonth') ? 'expiresMonth-error' : undefined
+            }
           />
           {checkInputHasError('expiresMonth') && (
-            <S.ErrorText>{form.errors.expiresMonth}</S.ErrorText>
+            <S.ErrorText id="expiresMonth-error">{form.errors.expiresMonth}</S.ErrorText>
           )}
         </S.Field>
         <S.Field>
@@ -388,13 +424,17 @@ const Sidebar = () => {
             onChange={form.handleChange}
             onBlur={form.handleBlur}
             className={checkInputHasError('expiresYear') ? 'error' : ''}
+            aria-invalid={checkInputHasError('expiresYear') || undefined}
+            aria-describedby={
+              checkInputHasError('expiresYear') ? 'expiresYear-error' : undefined
+            }
           />
           {checkInputHasError('expiresYear') && (
-            <S.ErrorText>{form.errors.expiresYear}</S.ErrorText>
+            <S.ErrorText id="expiresYear-error">{form.errors.expiresYear}</S.ErrorText>
           )}
         </S.Field>
       </S.FieldRow>
-      {apiError && <S.ErrorText>{apiError}</S.ErrorText>}
+      {apiError && <S.ErrorText role="alert">{apiError}</S.ErrorText>}
       <S.Buttons>
         <S.Button type="submit" disabled={form.isSubmitting}>
           {form.isSubmitting ? 'Finalizando...' : 'Finalizar pagamento'}
@@ -448,6 +488,9 @@ const Sidebar = () => {
       <S.Aside
         ref={asideRef}
         tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Carrinho de compras"
         onClick={(event) => event.stopPropagation()}
       >
         {step !== 'success' && (

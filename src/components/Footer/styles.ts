@@ -47,4 +47,7 @@ export const Disclaimer = styled.p`
   text-align: center;
   max-width: 480px;
   line-height: 1.6;
+  // O gap do Inner já dá 32px; +48px aproxima dos ~80px do Figma entre os
+  // ícones sociais e o disclaimer.
+  margin-top: 48px;
 `;

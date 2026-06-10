@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { theme } from '../../styles/theme';
 
 export const Card = styled.article`
-  border: 1px solid ${theme.colors.coral};
   background-color: ${theme.colors.white};
   display: flex;
   flex-direction: column;
@@ -23,7 +22,7 @@ export const ImageWrapper = styled.div`
 export const Tags = styled.div`
   position: absolute;
   top: 16px;
-  right: 8px;
+  right: 16px;
   display: flex;
   gap: 8px;
 `;
@@ -42,6 +41,11 @@ export const Info = styled.div`
   flex-direction: column;
   flex: 1;
   gap: 16px;
+  // Borda só na área de texto (esquerda/direita/baixo); a imagem fica sem
+  // borda no topo, como no Figma.
+  border-left: 1px solid ${theme.colors.coral};
+  border-right: 1px solid ${theme.colors.coral};
+  border-bottom: 1px solid ${theme.colors.coral};
 `;
 
 export const TitleRow = styled.div`
@@ -50,8 +54,8 @@ export const TitleRow = styled.div`
   justify-content: space-between;
 `;
 
-export const Name = styled.h3`
-  font-size: ${theme.fonts.sizes.subtitle};
+export const Name = styled.h2`
+  font-size: ${theme.fonts.sizes.cardTitle};
   font-weight: ${theme.fonts.weights.bold};
   color: ${theme.colors.coral};
 `;
@@ -60,13 +64,14 @@ export const Rating = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: ${theme.fonts.sizes.subtitle};
+  font-size: ${theme.fonts.sizes.cardTitle};
   font-weight: ${theme.fonts.weights.bold};
   color: ${theme.colors.coral};
 `;
 
-export const Star = styled.span`
-  font-size: ${theme.fonts.sizes.subtitle};
+export const Star = styled.img`
+  width: 21px;
+  height: 20px;
 `;
 
 export const Description = styled.p`

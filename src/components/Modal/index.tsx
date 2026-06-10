@@ -34,6 +34,9 @@ const Modal = ({ item, onClose }: Props) => {
       <S.Content
         ref={contentRef}
         tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
         onClick={(event) => event.stopPropagation()}
       >
         <S.Close onClick={onClose} aria-label="Fechar">
@@ -41,7 +44,7 @@ const Modal = ({ item, onClose }: Props) => {
         </S.Close>
         <S.Image src={item.foto} alt={item.nome} />
         <S.Details>
-          <S.Title>{item.nome}</S.Title>
+          <S.Title id="modal-title">{item.nome}</S.Title>
           <S.Description>
             {item.descricao}
             {'\n\n'}

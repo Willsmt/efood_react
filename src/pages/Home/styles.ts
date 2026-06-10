@@ -74,7 +74,7 @@ export const Main = styled.main`
 export const RestaurantGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 48px 32px;
+  gap: 48px 80px;
 
   ${media.mobile} {
     grid-template-columns: 1fr;

@@ -20,6 +20,9 @@ export const Inner = styled.div`
 `;
 
 export const NavLink = styled.a`
+  // flex: 1 nos dois lados (com o logo no meio) garante que o logo fique no
+  // centro exato da página, mesmo o texto do carrinho sendo mais largo.
+  flex: 1;
   font-size: ${theme.fonts.sizes.cardTitle};
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.coral};
@@ -36,6 +39,8 @@ export const Logo = styled.div`
 `;
 
 export const CartButton = styled.button`
+  flex: 1;
+  text-align: right;
   font-size: ${theme.fonts.sizes.cardTitle};
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.coral};

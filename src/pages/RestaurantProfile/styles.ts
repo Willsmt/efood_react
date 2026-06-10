@@ -52,7 +52,7 @@ export const Category = styled.span`
   }
 `;
 
-export const RestaurantName = styled.h2`
+export const RestaurantName = styled.h1`
   font-size: 32px;
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.white};
@@ -117,7 +117,7 @@ export const ProductInfo = styled.div`
   gap: 8px;
 `;
 
-export const ProductName = styled.h3`
+export const ProductName = styled.h2`
   font-size: ${theme.fonts.sizes.subtitle};
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.beige};

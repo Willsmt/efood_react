@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { Restaurant } from '../../types';
+import star from '../../assets/image/star_favorite.png';
 import * as S from './styles';
 
 type Props = {
@@ -24,13 +25,17 @@ const RestaurantCard = ({ restaurant }: Props) => {
           <S.Name>{titulo}</S.Name>
           <S.Rating>
             <span>{avaliacao}</span>
-            <S.Star>★</S.Star>
+            <S.Star src={star} alt="" />
           </S.Rating>
         </S.TitleRow>
         <S.Description>{descricao}</S.Description>
         {/* `as={Link}` faz o botão virar um link do Router (navega sem
             recarregar a página — comportamento de SPA) */}
-        <S.Button as={Link} to={`/restaurantes/${id}`}>
+        <S.Button
+          as={Link}
+          to={`/restaurantes/${id}`}
+          aria-label={`Saiba mais sobre ${titulo}`}
+        >
           Saiba mais
         </S.Button>
       </S.Info>
