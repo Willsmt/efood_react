@@ -31,7 +31,7 @@ export const Logo = styled.div`
 
   img {
     display: block;
-    height: 32px;
+    height: 57px;
   }
 `;
 
