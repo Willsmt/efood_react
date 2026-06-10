@@ -146,9 +146,15 @@ Pontos de estudo:
 - **POST**: precisa de `method`, `headers` (dizendo que o corpo é JSON) e `body` com `JSON.stringify(...)` (objeto JS → texto JSON).
 - **Generics (`<T>`)**: `handleResponse<Restaurant[]>` diz ao TypeScript qual o tipo do retorno, sem repetir lógica.
 
-### Como a página usa isso (padrão `useEffect`)
+### O padrão de 3 estados
 
-Na `Home` (`src/pages/Home/index.tsx`):
+Toda requisição tem **3 estados** que a tela precisa tratar:
+
+1. `isLoading` → mostra "Carregando..."
+2. `error` → mostra a mensagem de erro
+3. dados → renderiza o conteúdo
+
+A forma "crua" de fazer isso é com `useState` + `useEffect`:
 
 ```tsx
 const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -163,13 +169,60 @@ useEffect(() => {
 }, []); // [] = roda só uma vez, quando o componente monta
 ```
 
-Esse é o **padrão de 3 estados** para qualquer requisição:
+### Extraindo um hook customizado: `useFetch`
 
-1. `isLoading` → mostra "Carregando..."
-2. `error` → mostra a mensagem de erro
-3. dados → renderiza o conteúdo
+Esse bloco estava **repetido** na Home e no RestaurantProfile. Quando você vê a mesma lógica em dois lugares, é candidato a virar um **hook customizado** (`src/hooks/useFetch.ts`):
 
-> 💡 O array de dependências `[]` vazio faz o efeito rodar **uma única vez**. No `RestaurantProfile`, o array é `[id]` — toda vez que o `id` da URL muda, ele busca o restaurante de novo.
+```ts
+export const useFetch = <T>(
+  fetcher: () => Promise<T>,      // a função que busca os dados
+  errorMessage: string,          // mensagem se der erro
+  deps: unknown[] = [],          // quando refazer a busca
+): FetchState<T> => {
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;             // flag de "componente ainda montado"
+    setIsLoading(true);
+    setError(null);
+    fetcher()
+      .then((result) => { if (active) setData(result); })
+      .catch(() => { if (active) setError(errorMessage); })
+      .finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; }; // cleanup ao desmontar / mudar deps
+  }, deps);
+
+  return { data, isLoading, error };
+};
+```
+
+Agora a página fica enxuta:
+
+```tsx
+// Home: busca uma vez (deps = [] por padrão)
+const { data: restaurants, isLoading, error } = useFetch(
+  getRestaurants,
+  'Não foi possível carregar os restaurantes.',
+);
+
+// RestaurantProfile: rebusca quando o id da URL muda
+const { data: restaurant, isLoading, error } = useFetch(
+  () => getRestaurant(Number(id)),
+  'Não foi possível carregar o restaurante.',
+  [id],
+);
+```
+
+Pontos de estudo:
+
+- **Hook customizado** = uma função que começa com `use` e usa outros hooks dentro. Serve para **reutilizar lógica com estado** entre componentes.
+- **Generic `<T>`**: o hook serve para qualquer tipo de dado (`Restaurant[]`, `Restaurant`, ...). Quem chama define o tipo.
+- **A flag `active`**: se o componente desmontar (ou o `id` mudar) antes da resposta chegar, o `cleanup` marca `active = false` e evitamos chamar `setState` num componente que não existe mais (um *warning* clássico do React).
+- **`deps`**: igual ao array de dependências do `useEffect` — controla quando refazer a busca.
+
+> 💡 Existem outros 2 hooks customizados no projeto, ligados à experiência dos overlays: **`useBodyScrollLock`** (trava o scroll do fundo quando o modal/carrinho abre) e **`useEscapeKey`** (fecha com a tecla Esc). Mesma ideia: lógica com estado/efeito isolada para reuso.
 
 ---
 
@@ -305,8 +358,12 @@ const form = useFormik({
   },
   validationSchema: Yup.object({
     receiver: Yup.string().min(5, 'O nome precisa ter pelo menos 5 caracteres').required('Campo obrigatório'),
-    zipCode:  Yup.string().min(8, 'O CEP precisa ter pelo menos 8 caracteres').required('Campo obrigatório'),
-    complement: Yup.string(), // opcional: sem .required()
+    // Regex garante FORMATO, não só tamanho:
+    zipCode:     Yup.string().matches(/^\d{8}$/, 'O CEP deve ter 8 dígitos').required('Campo obrigatório'),
+    cardNumber:  Yup.string().matches(/^\d{16}$/, 'O número do cartão deve ter 16 dígitos').required('Campo obrigatório'),
+    cardCode:    Yup.string().matches(/^\d{3,4}$/, 'O CVV deve ter 3 ou 4 dígitos').required('Campo obrigatório'),
+    expiresMonth:Yup.string().matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido (01 a 12)').required('Campo obrigatório'),
+    complement:  Yup.string(), // opcional: sem .required()
     // ...demais campos
   }),
   onSubmit: async (values) => { /* monta o body e faz o POST */ },
@@ -314,8 +371,10 @@ const form = useFormik({
 ```
 
 - **`initialValues`**: todo campo começa string vazia. (Campos numéricos como `number` também são string aqui e convertidos com `Number(...)` na hora do envio.)
-- **`validationSchema`**: cada campo tem suas regras encadeadas — `.min()`, `.required()`. A mensagem é o que aparece na tela.
+- **`validationSchema`**: cada campo encadeia suas regras. Usamos `.matches(regex, msg)` para validar **formato** (ex.: CEP com exatamente 8 dígitos, mês entre 01 e 12), não apenas `.min()` de tamanho. A mensagem é o que aparece na tela.
 - **`onSubmit`**: só roda quando **todas** as validações passam.
+
+> 💡 **Por que regex e não só `.min()`?** `.min(8)` aceitaria `"abcdefgh"` como CEP. `/^\d{8}$/` exige **8 dígitos numéricos** — valida o formato de verdade.
 
 ### 5.2. Ligando um `<input>` ao Formik
 
@@ -437,6 +496,52 @@ export const AddButton = styled.button`
 - **Props dinâmicas**: o `FieldRow` aceita `$template` para mudar as colunas do grid. O `$` indica uma *transient prop* (não vai para o HTML).
 - **Estado de erro no input**: adicionamos a classe `error`, e o styled component tem `&.error { border-color: #d40000; }`.
 
+### 7.1. Responsividade (mobile-last)
+
+A estratégia é **mobile-last**: o estilo base é o de **desktop**, e *media queries* sobrescrevem em telas menores. Os helpers ficam em `src/styles/theme.ts`:
+
+```ts
+export const media = {
+  tablet: `@media (max-width: ${theme.breakpoints.desktop})`, // ≤ 1024px
+  mobile: `@media (max-width: ${theme.breakpoints.tablet})`,  // ≤ 768px
+};
+```
+
+Usados dentro de qualquer styled component:
+
+```ts
+export const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* desktop */
+
+  ${media.tablet} { grid-template-columns: repeat(2, 1fr); } /* tablet */
+  ${media.mobile} { grid-template-columns: 1fr; }            /* celular */
+`;
+```
+
+Para não repetir o mesmo padding lateral responsivo em vários lugares (Header, Footer, páginas), criamos um **mixin** reaproveitável com `css`:
+
+```ts
+export const containerPadding = css`
+  padding-left: ${theme.layout.contentPadding};   /* 171px no desktop */
+  padding-right: ${theme.layout.contentPadding};
+  ${media.tablet} { padding-left: 32px;  padding-right: 32px; }
+  ${media.mobile} { padding-left: 16px;  padding-right: 16px; }
+`;
+
+// e nos componentes:
+export const Inner = styled.div`
+  /* ... */
+  ${containerPadding}
+`;
+```
+
+Pontos de estudo:
+
+- **Mobile-last vs mobile-first**: aqui o base é desktop (`max-width` reduz). No mobile-first seria o contrário (`min-width` aumenta). Os dois funcionam — o importante é ser **consistente**.
+- **Mixin com `css`**: a tag `css` do styled-components permite guardar um pedaço de estilo numa variável e interpolá-lo (`${containerPadding}`) em vários componentes. É o equivalente a "função reutilizável", mas para CSS.
+- **Botão "voltar ao topo"** (`components/ScrollToTop`): aparece só em tablet/mobile (escondido no desktop via `display: none` + `${media.tablet} { display: flex; }`) e surge depois de rolar a página (estado controlado por um listener de `scroll`).
+
 ---
 
 ## 8. Roteamento
@@ -488,6 +593,8 @@ Tente responder sem olhar o código:
 6. Por que o erro de validação só aparece depois que o usuário "toca" no campo?
 7. Por que os campos numéricos passam por `Number(...)` antes do POST?
 8. O que dispara um novo deploy na Vercel?
+9. Por que a lógica de busca virou o hook `useFetch`? Que problema a flag `active` resolve?
+10. O que significa "mobile-last" e como o helper `media` implementa isso?
 
 <details>
 <summary>Respostas resumidas</summary>
@@ -500,6 +607,8 @@ Tente responder sem olhar o código:
 6. Por causa do `touched` — evita mostrar erro antes de o usuário interagir.
 7. Os `<input>` guardam string; a API espera número (`number`, `code`, `month`, `year`).
 8. Um `git push` na branch `main` (deploy automático via integração GitHub↔Vercel).
+9. A mesma lógica de 3 estados estava repetida na Home e no perfil — extrair evita duplicação. A flag `active` impede atualizar o estado de um componente já desmontado (ou após o `id` mudar).
+10. O estilo base é desktop e as media queries `max-width` reduzem para tablet/mobile. O `media` guarda essas queries prontas para reuso nos styled components.
 </details>
 
 ---
@@ -520,6 +629,10 @@ Tente responder sem olhar o código:
 | **SPA** | Single Page Application — troca de "páginas" sem recarregar o navegador. |
 | **CI/CD** | Integração/entrega contínua — push → build → deploy automático. |
 | **Transient prop** | Prop de styled-component prefixada com `$`, usada só no estilo (não vai pro DOM). |
+| **Hook customizado** | Função que começa com `use` e usa outros hooks dentro, para reutilizar lógica com estado (ex.: `useFetch`). |
+| **Mixin (`css`)** | Pedaço de estilo guardado numa variável e reaproveitado em vários styled components (ex.: `containerPadding`). |
+| **Mobile-last** | Estratégia responsiva onde o estilo base é desktop e media queries `max-width` ajustam telas menores. |
+| **Generic (`<T>`)** | Tipo "parametrizável": a mesma função/tipo serve para vários tipos, definidos por quem usa. |
 
 ---
 

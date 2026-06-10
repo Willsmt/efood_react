@@ -1,5 +1,7 @@
 import { css } from 'styled-components';
 
+// Design tokens centralizados (cores, fontes, breakpoints). Mudar uma cor
+// aqui reflete no app inteiro. Os valores vieram do layout do Figma.
 export const theme = {
   colors: {
     coral: '#e66767',

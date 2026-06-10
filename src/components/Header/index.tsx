@@ -5,6 +5,8 @@ import logo from '../../assets/image/logo.png';
 import * as S from './styles';
 
 const Header = () => {
+  // LÊ a lista de itens do Redux (re-renderiza sozinho quando ela muda) e
+  // pega o dispatch para DISPARAR ações.
   const items = useAppSelector(selectCartItems);
   const dispatch = useAppDispatch();
 

@@ -6,6 +6,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* :id é um parâmetro dinâmico, lido com useParams no perfil */}
         <Route path="/" element={<Home />} />
         <Route path="/restaurantes/:id" element={<RestaurantProfile />} />
       </Routes>

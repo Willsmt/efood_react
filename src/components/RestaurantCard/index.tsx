@@ -28,6 +28,8 @@ const RestaurantCard = ({ restaurant }: Props) => {
           </S.Rating>
         </S.TitleRow>
         <S.Description>{descricao}</S.Description>
+        {/* `as={Link}` faz o botão virar um link do Router (navega sem
+            recarregar a página — comportamento de SPA) */}
         <S.Button as={Link} to={`/restaurantes/${id}`}>
           Saiba mais
         </S.Button>

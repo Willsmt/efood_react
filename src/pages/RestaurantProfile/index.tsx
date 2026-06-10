@@ -10,9 +10,12 @@ import type { MenuItem } from '../../types';
 import * as S from './styles';
 
 const RestaurantProfile = () => {
+  // `id` vem do parâmetro dinâmico da rota (/restaurantes/:id).
   const { id } = useParams<{ id: string }>();
+  // Prato selecionado para abrir no modal (null = modal fechado).
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
+  // Rebusca sempre que o `id` da URL mudar (3º argumento = dependências).
   const {
     data: restaurant,
     isLoading,

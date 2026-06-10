@@ -1,6 +1,6 @@
 # 🍔 efood
 
-> 🧩 **O que este projeto comprova:** React 18, TypeScript (modo estrito), Redux Toolkit (slices + selectors), React Router v6, Styled Components, Formik + Yup, consumo de API (GET/POST), Vite e deploy contínuo na Vercel.
+> 🧩 **O que este projeto comprova:** React 18, TypeScript (modo estrito), Redux Toolkit (slices + selectors), React Router v6, Styled Components, Formik + Yup, consumo de API (GET/POST), hooks customizados, layout **responsivo** (mobile/tablet/desktop), Vite e deploy contínuo na Vercel.
 
 Aplicativo de delivery de comida desenvolvido no módulo de React da **EBAC**, a partir de um layout do Figma. O usuário navega por restaurantes, vê o cardápio de cada um, adiciona pratos ao carrinho e finaliza o pedido por um checkout em etapas (entrega → pagamento → confirmação) que envia os dados para uma API real.
 
@@ -51,17 +51,22 @@ npm run lint
 
 ```
 src/
-├── App.tsx                 # Componente raiz (providers de tema, rotas e sidebar)
+├── App.tsx                 # Componente raiz (tema, rotas, sidebar e botão "voltar ao topo")
 ├── main.tsx                # Ponto de entrada; injeta o <Provider> do Redux
 ├── components/             # Componentes reutilizáveis
 │   ├── Header/             # Cabeçalho com contador do carrinho
 │   ├── Footer/             # Rodapé com logo e redes sociais
 │   ├── RestaurantCard/     # Card de restaurante na Home
 │   ├── Modal/              # Detalhe do produto (adiciona ao carrinho)
-│   └── Sidebar/            # Carrinho + checkout (cart → delivery → payment → success)
+│   ├── Sidebar/            # Carrinho + checkout (cart → delivery → payment → success)
+│   └── ScrollToTop/        # Botão flutuante "voltar ao topo" (só em mobile/tablet)
 ├── pages/
 │   ├── Home/               # Lista de restaurantes (consome a API)
 │   └── RestaurantProfile/  # Perfil do restaurante + cardápio (consome a API)
+├── hooks/                  # Hooks customizados reutilizáveis
+│   ├── useFetch.ts         # Padrão de busca (dados / carregando / erro)
+│   ├── useBodyScrollLock.ts# Trava o scroll do fundo com overlays abertos
+│   └── useEscapeKey.ts     # Fecha overlays com a tecla Esc
 ├── routes/index.tsx        # Definição das rotas
 ├── store/                  # Redux Toolkit
 │   ├── index.ts            # Configuração da store + tipos RootState/AppDispatch
@@ -69,9 +74,9 @@ src/
 │   └── hooks.ts            # Hooks tipados useAppDispatch / useAppSelector
 ├── services/api.ts         # Funções de acesso à API (fetch / AJAX)
 ├── types/index.ts          # Tipos do domínio (TypeScript)
-├── utils/format.ts         # Utilitários (ex.: formatPrice)
+├── utils/format.ts         # Utilitários (formatPrice, truncate)
 └── styles/
-    ├── theme.ts            # Design tokens (cores, fontes, tamanhos)
+    ├── theme.ts            # Design tokens + helpers responsivos (media, containerPadding)
     └── global.ts           # Estilos globais
 ```
 
@@ -133,6 +138,23 @@ O `orderId` retornado é exibido na tela de confirmação do pedido.
 - ✅ Checkout em etapas com **formulários validados** (Formik + Yup)
 - ✅ Envio do pedido via **POST** para a API
 - ✅ Tela de confirmação preenchida com o **`orderId`** retornado pela API
+- ✅ Layout **responsivo** para mobile, tablet e desktop
+- ✅ Botão **"voltar ao topo"** flutuante (mobile/tablet)
+- ✅ Overlays (modal e carrinho) fecham com **Esc** e travam o scroll do fundo
+
+---
+
+## 📱 Responsividade
+
+Abordagem **mobile-last**: o estilo base é desktop e os breakpoints abaixo sobrescrevem em telas menores. Os helpers ficam em `src/styles/theme.ts`:
+
+| Helper | Faixa | Uso |
+|---|---|---|
+| `media.tablet` | ≤ 1024px | Tablet e abaixo |
+| `media.mobile` | ≤ 768px | Celular e abaixo |
+| `containerPadding` | — | Padding lateral responsivo reaproveitado (171px → 32px → 16px) |
+
+Principais adaptações: grids passam de 3/2 colunas para **1 coluna** no mobile, o modal **empilha** imagem e texto, e a sidebar do carrinho fica **fluida** (full-width até 360px).
 
 ---
 
@@ -141,11 +163,12 @@ O `orderId` retornado é exibido na tela de confirmação do pedido.
 | Token | Valor |
 |---|---|
 | Coral (primária) | `#e66767` |
-| Bege (fundo de cards) | `#ffebd9` |
+| Bege (texto/realces) | `#ffebd9` |
 | Background | `#fff8f2` |
 | Texto de input | `#4b4b4b` |
 | Overlay | `rgba(0, 0, 0, 0.8)` |
-| Fonte | Roboto (400, 700, 900) |
+| Fonte | Roboto (100, 400, 700, 900) |
+| Breakpoints | desktop `1024px`, tablet `768px` |
 
 ---
 

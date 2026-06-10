@@ -6,6 +6,8 @@ import logo from '../../assets/image/logo.png';
 import * as S from './styles';
 
 const Home = () => {
+  // Busca a lista de restaurantes na API. O hook devolve os 3 estados
+  // (dados / carregando / erro) prontos para usar na renderização.
   const {
     data: restaurants,
     isLoading,

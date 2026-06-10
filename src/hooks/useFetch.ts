@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 
+// Hook genérico que encapsula o "padrão de 3 estados" de qualquer
+// requisição (carregando / erro / dados). Antes esse bloco estava repetido
+// na Home e no RestaurantProfile; agora é um só lugar reaproveitável.
 type FetchState<T> = {
   data: T | null;
   isLoading: boolean;
@@ -16,6 +19,8 @@ export const useFetch = <T>(
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // `active` evita atualizar o estado se o componente desmontar antes da
+    // resposta chegar (ou se o `id` mudar e disparar uma nova busca).
     let active = true;
     setIsLoading(true);
     setError(null);

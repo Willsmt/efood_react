@@ -27,6 +27,8 @@ const Sidebar = () => {
   const [orderId, setOrderId] = useState('');
   const [apiError, setApiError] = useState<string | null>(null);
 
+  // Um ÚNICO formulário cobre entrega e pagamento. O Formik cuida de
+  // valores/erros/submit; o Yup (validationSchema) descreve as regras.
   const form = useFormik({
     initialValues: {
       receiver: '',
@@ -72,6 +74,8 @@ const Sidebar = () => {
         .matches(/^\d{2,4}$/, 'Ano inválido')
         .required('Campo obrigatório'),
     }),
+    // Só roda quando TODAS as validações passam. Monta o body no formato da
+    // API e faz o POST.
     onSubmit: async (values) => {
       setApiError(null);
       try {
@@ -102,6 +106,8 @@ const Sidebar = () => {
             },
           },
         });
+        // Guarda o orderId devolvido pela API e só então mostra a tela de
+        // sucesso — a confirmação aparece DEPOIS da resposta.
         setOrderId(response.orderId);
         dispatch(setStep('success'));
       } catch {
@@ -110,6 +116,10 @@ const Sidebar = () => {
     },
   });
 
+  // Trava o scroll do fundo e fecha com Esc enquanto a sidebar está aberta
+  // (menos na tela de sucesso, onde a saída é só pelo botão "Concluir").
+  // Esses hooks ficam ANTES do early-return abaixo por causa das regras dos
+  // hooks (não podem ser chamados condicionalmente).
   useBodyScrollLock(isOpen);
   useEscapeKey(() => dispatch(closeSidebar()), isOpen && step !== 'success');
 
@@ -117,12 +127,16 @@ const Sidebar = () => {
     return null;
   }
 
+  // Só mostra o erro de um campo se ele já foi "tocado" E está inválido —
+  // assim não jogamos "Campo obrigatório" antes do usuário interagir.
   const checkInputHasError = (fieldName: keyof typeof form.values) => {
     const isTouched = fieldName in form.touched;
     const isInvalid = fieldName in form.errors;
     return isTouched && isInvalid;
   };
 
+  // Avança para o pagamento só se os campos de ENTREGA estiverem válidos
+  // (validamos um subconjunto do formulário, não o todo).
   const goToPayment = async () => {
     const errors = await form.validateForm();
     const deliveryFields: (keyof typeof form.values)[] = [

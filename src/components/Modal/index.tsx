@@ -14,9 +14,12 @@ type Props = {
 const Modal = ({ item, onClose }: Props) => {
   const dispatch = useAppDispatch();
 
+  // Enquanto o modal está aberto: trava o scroll do fundo e permite fechar
+  // com a tecla Esc.
   useBodyScrollLock(true);
   useEscapeKey(onClose);
 
+  // Adiciona o prato ao carrinho (Redux) e fecha o modal.
   const handleAdd = () => {
     dispatch(addItem(item));
     onClose();
