@@ -20,8 +20,8 @@ export const Inner = styled.div`
 `;
 
 export const NavLink = styled.a`
-  font-size: ${theme.fonts.sizes.body};
-  font-weight: ${theme.fonts.weights.bold};
+  font-size: ${theme.fonts.sizes.cardTitle};
+  font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.coral};
 `;
 
@@ -36,8 +36,8 @@ export const Logo = styled.div`
 `;
 
 export const CartButton = styled.button`
-  font-size: ${theme.fonts.sizes.body};
-  font-weight: ${theme.fonts.weights.bold};
+  font-size: ${theme.fonts.sizes.cardTitle};
+  font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.coral};
   background: none;
   border: none;
