@@ -18,6 +18,7 @@ export const theme = {
       title: '36px',
     },
     weights: {
+      thin: 100,
       regular: 400,
       bold: 700,
       black: 900,

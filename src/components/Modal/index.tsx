@@ -29,7 +29,7 @@ const Modal = ({ item, onClose }: Props) => {
           <S.Description>
             {item.descricao}
             {'\n\n'}
-            {item.porcao}
+            Serve: de {item.porcao}
           </S.Description>
           <S.AddButton onClick={handleAdd}>
             Adicionar ao carrinho - {formatPrice(item.preco)}

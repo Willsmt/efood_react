@@ -20,38 +20,30 @@ export const Cover = styled.div`
 export const CoverOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5) 0%,
-    transparent 100%
-  );
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
 `;
 
 export const CoverInner = styled.div`
   max-width: 1366px;
   margin: 0 auto;
-  padding: 0 171px 16px;
+  padding: 24px 171px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
 `;
 
 export const Category = styled.span`
-  display: inline-block;
-  background-color: ${theme.colors.coral};
-  color: ${theme.colors.beige};
-  font-size: ${theme.fonts.sizes.xsmall};
-  font-weight: ${theme.fonts.weights.bold};
-  padding: 6px 10px;
-  align-self: flex-start;
+  font-size: 32px;
+  font-weight: ${theme.fonts.weights.thin};
+  color: ${theme.colors.white};
 `;
 
 export const RestaurantName = styled.h2`
   font-size: 32px;
-  font-weight: ${theme.fonts.weights.bold};
+  font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.white};
 `;
 
@@ -70,18 +62,21 @@ export const ProductGrid = styled.div`
 
 export const ProductCard = styled.article`
   background-color: ${theme.colors.coral};
+  border-radius: 8px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
   img {
     width: 100%;
     height: 167px;
     object-fit: cover;
+    border-radius: 8px;
   }
 `;
 
 export const ProductInfo = styled.div`
-  padding: 8px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -90,7 +85,7 @@ export const ProductInfo = styled.div`
 
 export const ProductName = styled.h3`
   font-size: ${theme.fonts.sizes.subtitle};
-  font-weight: ${theme.fonts.weights.bold};
+  font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.beige};
 `;
 
@@ -112,4 +107,5 @@ export const AddButton = styled.button`
   border: none;
   cursor: pointer;
   align-self: stretch;
+  text-align: center;
 `;
