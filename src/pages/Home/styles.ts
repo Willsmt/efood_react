@@ -39,7 +39,10 @@ export const Logo = styled.div`
 `;
 
 export const HeroText = styled.h1`
-  margin: auto 0;
+  // Texto posicionado no terço inferior do hero (margin-bottom: auto joga a
+  // folga restante para baixo), batendo com a posição do headline no Figma.
+  margin-top: 136px;
+  margin-bottom: auto;
   font-size: ${theme.fonts.sizes.title};
   font-weight: ${theme.fonts.weights.black};
   color: ${theme.colors.coral};
